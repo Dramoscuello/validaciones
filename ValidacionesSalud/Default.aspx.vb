@@ -1,7 +1,7 @@
 ﻿Imports System.Data
 Imports MySql.Data.MySqlClient
-Imports System.Text
-Imports System.IO
+Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Runtime.InteropServices
 
 Public Class _Default
     Inherits Page
@@ -24,7 +24,7 @@ Public Class _Default
         Sexonoexiste()
         Tipodocnoexiste()
         Umenoexiste()
-        Longitudmax()
+        'Longitudmax()
     End Sub
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -133,5 +133,43 @@ Public Class _Default
         cmd.CommandType = CommandType.StoredProcedure
         cmd.ExecuteNonQuery()
         con.Close()
+    End Sub
+
+    Protected Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim i, j As Integer
+        Dim myData As New DataSet
+        Dim myAdapter As New MySqlDataAdapter
+        Dim xlap As New Excel.Application()
+        xlap.Visible = True
+        Dim misvalue As Object = System.Reflection.Missing.Value
+        Dim xlworkbook As Excel.Workbook = xlap.Workbooks.Add(misvalue)
+        Dim xlworksheet As Excel.Worksheet = CType(xlworkbook.Sheets(1), Excel.Worksheet)
+
+        con.Open()
+        Dim cmd As MySqlCommand = con.CreateCommand()
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = "Select * from datosusuerrores"
+        myAdapter.SelectCommand = cmd
+        myAdapter.Fill(myData)
+
+        For i = 1 To myData.Tables(0).Rows.Count - 1
+            For j = 1 To myData.Tables(0).Columns.Count - 1
+                xlworksheet.Cells(i + 1, j + 1) = myData.Tables(0).Rows(i).Item(j)
+            Next
+        Next
+
+        xlworksheet.SaveAs("D:\doc.xls")
+        xlworkbook.Close()
+        xlap.Quit()
+
+        Myobject(xlap)
+        Myobject(xlworkbook)
+        Myobject(xlworksheet)
+        con.Close()
+    End Sub
+
+    Private Sub Myobject(ByVal obj As Object)
+        Marshal.ReleaseComObject(obj)
+        obj = Nothing
     End Sub
 End Class
