@@ -13,12 +13,18 @@ Public Class _Default
     End Sub
 
     Protected Sub Button3_Click1(sender As Object, e As EventArgs) Handles Button3.Click
-        'con.Open()
-        'Dim cmd As MySqlCommand = con.CreateCommand()
-        'cmd.CommandType = CommandType.Text
-        'cmd.CommandText = "truncate prueba"
-        'cmd.ExecuteNonQuery()
-        'con.Close()
+        Ceros_izquierda()
+        Sexo_Hombre_Mal()
+        Sexo_Mujer_Mal()
+        Edadnodocumento()
+        Identificacionrepetida()
+        Identificacionvacia()
+        Primerapellidovacio()
+        Pnombrevacio()
+        Sexonoexiste()
+        Tipodocnoexiste()
+        Umenoexiste()
+        Longitudmax()
     End Sub
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -31,5 +37,101 @@ Public Class _Default
             cmd.ExecuteNonQuery()
             con.Close()
         End If
+    End Sub
+
+    Protected Sub Ceros_izquierda()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_ceros", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
+    End Sub
+
+    Protected Sub Sexo_Hombre_Mal()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_sexohombremal", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
+    End Sub
+
+    Protected Sub Sexo_Mujer_Mal()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_sexomujermal", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
+    End Sub
+
+    Protected Sub Edadnodocumento()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_identificacionerronea", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
+    End Sub
+
+    Protected Sub Identificacionrepetida()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_identificacionesrepetidas", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
+    End Sub
+
+    Protected Sub Identificacionvacia()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_identificaciovacia", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
+    End Sub
+
+    Protected Sub Primerapellidovacio()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_papellidovacio", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
+    End Sub
+
+    Protected Sub Pnombrevacio()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_pnombrevacio", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
+    End Sub
+
+    Protected Sub Sexonoexiste()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_sexonoexiste", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
+    End Sub
+
+    Protected Sub Tipodocnoexiste()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_tipodocumentonoexiste", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
+    End Sub
+
+    Protected Sub Umenoexiste()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_umenoexiste", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
+    End Sub
+
+    Protected Sub Longitudmax()
+        con.Open()
+        Dim cmd As New MySqlCommand("PA_logitudmax", con)
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.ExecuteNonQuery()
+        con.Close()
     End Sub
 End Class
