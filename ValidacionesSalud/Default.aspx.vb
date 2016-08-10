@@ -25,10 +25,12 @@ Public Class _Default
         Tipodocnoexiste()
         Umenoexiste()
         'Longitudmax()
+        'ClientScript.RegisterStartupScript(Me.GetType(), "sweetAlert('Oops...', 'Something went wrong!', 'error');", True)
     End Sub
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim path As String = "C:\\Users\\Win10\\Dropbox\\Guardados\\" + FileUpload1.PostedFile.FileName
+        'Inconveniente, el fileupload no da la ruta completa y no se guarda en /temo, tuve que colocar una ruta estatica para que sirviera el proyecto
         If Not String.IsNullOrEmpty(path) Then
             con.Open()
             Dim cmd As MySqlCommand = con.CreateCommand()
@@ -147,8 +149,8 @@ Public Class _Default
 
         con.Open()
         Dim cmd As MySqlCommand = con.CreateCommand()
-        cmd.CommandType = CommandType.Text
-        cmd.CommandText = "Select * from datosusuerrores"
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "PA_selectusuerrores"
         myAdapter.SelectCommand = cmd
         myAdapter.Fill(myData)
 
@@ -158,13 +160,14 @@ Public Class _Default
             Next
         Next
 
-        xlworksheet.SaveAs("D:\doc.xls")
+        xlworksheet.SaveAs("D:\doc.xlsx")
         xlworkbook.Close()
         xlap.Quit()
 
         Myobject(xlap)
         Myobject(xlworkbook)
         Myobject(xlworksheet)
+        'Truncar()
         con.Close()
     End Sub
 
@@ -172,4 +175,13 @@ Public Class _Default
         Marshal.ReleaseComObject(obj)
         obj = Nothing
     End Sub
+
+    'Private Sub Truncar()
+    'con.Open()
+    'Dim cmd As MySqlCommand = con.CreateCommand()
+    'cmd.CommandType = CommandType.Text
+    'cmd.CommandText = "truncate datosusuerrores"
+    'cmd.ExecuteNonQuery()
+    'con.Close()
+    'End Sub
 End Class
