@@ -555,6 +555,15 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
+<member name="F:ValidacionesSalud._Default._Label2">
+<summary>
+Label2 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
 <member name="T:ValidacionesSalud.My.MyWebExtension">
  <summary>
  Module used to define the properties that are available in the My Namespace for Web projects.
