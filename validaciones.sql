@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-08-2016 a las 20:57:15
+-- Tiempo de generación: 10-08-2016 a las 23:03:42
 -- Versión del servidor: 5.7.9
 -- Versión de PHP: 5.6.16
 
@@ -59,6 +59,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `PA_pnombrevacio` ()  begin
 	insert into datosusuerrores(td_, ni_, papellido_, sapellido_, pnombre_, snombre_, error_) select distinct td_t, ni_t, papellido_t, sapellido_t, pnombre_t, snombre_t, 'Error, primer nombre vacio' from datosusutext where pnombre_t is null;
 end$$
 
+DROP PROCEDURE IF EXISTS `PA_selectusuerrores`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PA_selectusuerrores` ()  BEGIN
+	SELECT * FROM datosusuerrores;
+END$$
+
 DROP PROCEDURE IF EXISTS `PA_sexohombremal`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `PA_sexohombremal` ()  begin
 	insert into datosusuerrores(td_, ni_, papellido_, sapellido_, pnombre_, snombre_, error_) select distinct td_t, ni_t, papellido_t, sapellido_t, pnombre_t, snombre_t, 'Error hombre con sexo de femenino' from datosusutext inner join sexomf on datosusutext.pnombre_t = sexomf.nombre and datosusutext.sexo_t <> sexomf.sexo and datosusutext.sexo_t = 'F';
@@ -78,6 +83,16 @@ DROP PROCEDURE IF EXISTS `PA_tipodocumentonoexiste`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `PA_tipodocumentonoexiste` ()  begin
 	insert into datosusuerrores(td_, ni_, papellido_, sapellido_, pnombre_, snombre_, error_) select distinct td_t, ni_t, papellido_t, sapellido_t, pnombre_t, snombre_t, 'Error, tipo de documento no existe' from datosusutext where td_t<>'CC' and td_t<>'TI' and td_t<>'CE' and td_t<>'PA' and td_t<>'RC' and td_t<>'AS' and td_t<>'MS' and td_t<>'MU';
 end$$
+
+DROP PROCEDURE IF EXISTS `PA_truncatedatosusuerrores`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PA_truncatedatosusuerrores` ()  BEGIN
+	TRUNCATE datosusuerrores;
+END$$
+
+DROP PROCEDURE IF EXISTS `PA_truncatedatosusutext`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PA_truncatedatosusutext` ()  BEGIN
+	TRUNCATE datosusutext;
+END$$
 
 DROP PROCEDURE IF EXISTS `PA_umenoexiste`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `PA_umenoexiste` ()  begin

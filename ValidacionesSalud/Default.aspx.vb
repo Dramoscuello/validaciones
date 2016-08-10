@@ -29,15 +29,20 @@ Public Class _Default
     End Sub
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim path As String = "C:\\Users\\Win10\\Dropbox\\Guardados\\" + FileUpload1.PostedFile.FileName
+        Dim path As String = FileUpload1.PostedFile.FileName
+        Dim x As String = "C:\\Users\\Win10\\Dropbox\\Guardados\\"
+        Dim source As String
         'Inconveniente, el fileupload no da la ruta completa y no se guarda en /temo, tuve que colocar una ruta estatica para que sirviera el proyecto
         If Not String.IsNullOrEmpty(path) Then
             con.Open()
+            source = x + path
             Dim cmd As MySqlCommand = con.CreateCommand()
             cmd.CommandType = CommandType.Text
-            cmd.CommandText = "LOAD DATA LOCAL INFILE " + "'" + path + "'" + " INTO TABLE datosusutext FIELDS TERMINATED BY ',' ENCLOSED BY " + "'" + "\" + Chr(34) + "'" + " ESCAPED BY " + "'" + "\" + "\" + "'"
+            cmd.CommandText = "LOAD DATA LOCAL INFILE " + "'" + source + "'" + " INTO TABLE datosusutext FIELDS TERMINATED BY ',' ENCLOSED BY " + "'" + "\" + Chr(34) + "'" + " ESCAPED BY " + "'" + "\" + "\" + "'"
             cmd.ExecuteNonQuery()
             con.Close()
+        Else
+            ClientScript.RegisterStartupScript(Me.GetType(), "alert('Debe seleccionar un archivo .txt');", True)
         End If
     End Sub
 
@@ -167,8 +172,21 @@ Public Class _Default
         Myobject(xlap)
         Myobject(xlworkbook)
         Myobject(xlworksheet)
-        'Truncar()
+
+
+
+        Dim cmd2 As New MySqlCommand("PA_truncatedatosusuerrores", con)
+        cmd2.CommandType = CommandType.StoredProcedure
+        cmd2.ExecuteNonQuery()
+
+
+
+        Dim cmd3 As New MySqlCommand("PA_truncatedatosusutext", con)
+        cmd3.CommandType = CommandType.StoredProcedure
+        cmd3.ExecuteNonQuery()
+
         con.Close()
+
     End Sub
 
     Private Sub Myobject(ByVal obj As Object)
@@ -176,12 +194,5 @@ Public Class _Default
         obj = Nothing
     End Sub
 
-    'Private Sub Truncar()
-    'con.Open()
-    'Dim cmd As MySqlCommand = con.CreateCommand()
-    'cmd.CommandType = CommandType.Text
-    'cmd.CommandText = "truncate datosusuerrores"
-    'cmd.ExecuteNonQuery()
-    'con.Close()
-    'End Sub
+
 End Class
