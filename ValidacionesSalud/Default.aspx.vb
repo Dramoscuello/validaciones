@@ -43,6 +43,7 @@ Public Class _Default
         ElseIf String.IsNullOrEmpty(path) Then
             ClientScript.RegisterStartupScript(Me.GetType(), "alert", "alert('Debe seleccionar un archivo .txt');", True)
         End If
+        My.Computer.FileSystem.DeleteFile(Server.MapPath("~/Upload/") + path)
     End Sub
 
     Protected Sub Ceros_izquierda()
@@ -173,7 +174,6 @@ Public Class _Default
         Myobject(xlworksheet)
 
         Label2.Text = "Guardado excel en D:\\"
-
         Dim cmd2 As New MySqlCommand("PA_truncatedatosusuerrores", con)
         cmd2.CommandType = CommandType.StoredProcedure
         cmd2.ExecuteNonQuery()
