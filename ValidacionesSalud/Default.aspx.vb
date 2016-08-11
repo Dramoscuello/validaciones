@@ -28,10 +28,10 @@ Public Class _Default
     End Sub
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        FileUpload1.PostedFile.SaveAs(Server.MapPath("~/Upload/") + FileUpload1.FileName)
+        FileUpload1.PostedFile.SaveAs(Server.MapPath("~/") + FileUpload1.FileName)
 
         Dim path As String = FileUpload1.PostedFile.FileName
-        Dim x As String = Server.MapPath("~/Upload/")
+        Dim x As String = Server.MapPath("~/")
         Dim source As String = Replace(x, "\", "/")
         If Not String.IsNullOrEmpty(path) Then
             con.Open()
@@ -43,7 +43,7 @@ Public Class _Default
         ElseIf String.IsNullOrEmpty(path) Then
             ClientScript.RegisterStartupScript(Me.GetType(), "alert", "alert('Debe seleccionar un archivo .txt');", True)
         End If
-        My.Computer.FileSystem.DeleteFile(Server.MapPath("~/Upload/") + path)
+        My.Computer.FileSystem.DeleteFile(Server.MapPath("~/") + path)
     End Sub
 
     Protected Sub Ceros_izquierda()
