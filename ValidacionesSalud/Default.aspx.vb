@@ -25,21 +25,19 @@ Public Class _Default
         Tipodocnoexiste()
         Umenoexiste()
         'Longitudmax()
-        'ClientScript.RegisterStartupScript(Me.GetType(), "sweetAlert('Oops...', 'Something went wrong!', 'error');", True)
     End Sub
 
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        FileUpload1.PostedFile.SaveAs(Server.MapPath("~/Upload/") + FileUpload1.FileName)
+
         Dim path As String = FileUpload1.PostedFile.FileName
-        Dim x As String = "C:/Users/Win10/Dropbox/Guardados/"
-        Dim source As String = ""
-        'Inconveniente, el fileupload no da la ruta completa y no se guarda en /temo, tuve que colocar una ruta estatica para que sirviera el proyecto
+        Dim x As String = Server.MapPath("~/Upload/")
+        Dim source As String = Replace(x, "\", "/")
         If Not String.IsNullOrEmpty(path) Then
             con.Open()
-            source = x + path
             Dim cmd As MySqlCommand = con.CreateCommand()
             cmd.CommandType = CommandType.Text
-            'cmd.CommandText = "LOAD DATA LOCAL INFILE " + "'" + source + "'" + " INTO TABLE datosusutext FIELDS TERMINATED BY ',' ENCLOSED BY " + "'" + "\" + Chr(34) + "'" + " ESCAPED BY " + "'" + "\" + "\" + "'"
-            cmd.CommandText = "LOAD DATA LOCAL INFILE " + "'" + source + "'" + " INTO TABLE datosusutext FIELDS TERMINATED BY ','"
+            cmd.CommandText = "LOAD DATA LOCAL INFILE " + "'" + source + path + "'" + " INTO TABLE datosusutext FIELDS TERMINATED BY ','"
             cmd.ExecuteNonQuery()
             con.Close()
         ElseIf String.IsNullOrEmpty(path) Then
